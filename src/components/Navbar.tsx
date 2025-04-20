@@ -2,6 +2,7 @@
 import { Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -14,17 +15,17 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <motion.a 
-            href="#home"
-            className="text-2xl font-bold text-gray-900 dark:text-white"
+          <motion.div 
             whileHover={{ scale: 1.05 }}
           >
-            Portfolio
-          </motion.a>
+            <Link to="/" className="text-2xl font-bold text-gray-900 dark:text-white">
+              Portfolio
+            </Link>
+          </motion.div>
           <div className="flex items-center gap-6">
-            <NavLink href="#projects">Projects</NavLink>
-            <NavLink href="#skills">Skills</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
+            <NavLink to="/projects">Projects</NavLink>
+            <NavLink to="/#skills">Skills</NavLink>
+            <NavLink to="/#contact">Contact</NavLink>
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -40,14 +41,17 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <motion.a
-    href={href}
-    className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
+  <motion.div
     whileHover={{ scale: 1.1 }}
   >
-    {children}
-  </motion.a>
+    <Link
+      to={to}
+      className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+    >
+      {children}
+    </Link>
+  </motion.div>
 );
 
 export default Navbar;
