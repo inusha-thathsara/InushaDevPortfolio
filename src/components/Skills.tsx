@@ -6,7 +6,7 @@ import {
   FileCode,
   Terminal,
   FileJson,
-  FileCss,
+  File,
   Server,
   Atom,
   Paintbrush,
@@ -42,7 +42,7 @@ const skillCategories: SkillCategory[] = [
       { name: "Python", level: 85, icon: <Terminal className="w-5 h-5" /> },
       { name: "Dart", level: 80, icon: <Code className="w-5 h-5" /> },
       { name: "HTML5", level: 95, icon: <CodeXml className="w-5 h-5" /> },
-      { name: "CSS3", level: 90, icon: <FileCss className="w-5 h-5" /> },
+      { name: "CSS3", level: 90, icon: <File className="w-5 h-5" /> },
     ],
   },
   {
