@@ -1,4 +1,3 @@
-
 import { Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
@@ -24,8 +23,7 @@ const Navbar = () => {
           </motion.div>
           <div className="flex items-center gap-6">
             <NavLink to="/projects">Projects</NavLink>
-            <NavLink to="/#skills">Skills</NavLink>
-            <NavLink to="/#contact">Contact</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
