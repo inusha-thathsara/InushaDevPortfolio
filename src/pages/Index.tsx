@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Skills from "../components/Skills";
@@ -44,9 +45,9 @@ const Index = () => {
                 transition={{ delay: 0.4 }}
                 className="flex justify-center gap-4"
               >
-                <SocialLink href="https://github.com/yourusername" icon={<Github size={24} />} />
-                <SocialLink href="https://linkedin.com/in/yourusername" icon={<Linkedin size={24} />} />
-                <SocialLink href="mailto:your.email@example.com" icon={<Mail size={24} />} />
+                <SocialLink href="https://github.com/inusha-thathsara" icon={<Github size={24} />} />
+                <SocialLink href="https://www.linkedin.com/in/inusha-gunasekara-9996632a5" icon={<Linkedin size={24} />} />
+                <SocialLink href="mailto:inusha.thathsara@gmail.com" icon={<Mail size={24} />} />
               </motion.div>
             </motion.div>
           </div>
@@ -90,7 +91,7 @@ const Index = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="mailto:your.email@example.com"
+                href="mailto:inusha.thathsara@gmail.com"
                 className="inline-block bg-purple-500 text-white px-8 py-3 rounded-full font-medium hover:bg-purple-600 transition-colors"
               >
                 Send Message
