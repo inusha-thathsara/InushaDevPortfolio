@@ -1,17 +1,80 @@
 
 import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Javascript,
+  Python,
+  Dart,
+  Html5,
+  Css3,
+  NodeJs,
+  React,
+  TailwindCss,
+  Bootstrap,
+  GitBranch,
+  Github,
+  VsCode,
+  Npm,
+  LocalStorage,
+  Api,
+  Figma,
+  Web,
+  Ai,
+  CrossPlatform,
+} from "lucide-react";
 
 interface Skill {
   name: string;
   level: number;
+  icon?: React.ReactNode;
 }
 
-const skillsList: Skill[] = [
-  { name: "React", level: 90 },
-  { name: "TypeScript", level: 85 },
-  { name: "Node.js", level: 80 },
-  { name: "Python", level: 75 },
-  { name: "CSS/Tailwind", level: 85 },
+interface SkillCategory {
+  name: string;
+  skills: Skill[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    name: "Programming Languages",
+    skills: [
+      { name: "JavaScript", level: 90, icon: <Javascript className="w-5 h-5" /> },
+      { name: "Python", level: 85, icon: <Python className="w-5 h-5" /> },
+      { name: "Dart", level: 80, icon: <Dart className="w-5 h-5" /> },
+      { name: "HTML5", level: 95, icon: <Html5 className="w-5 h-5" /> },
+      { name: "CSS3", level: 90, icon: <Css3 className="w-5 h-5" /> },
+    ],
+  },
+  {
+    name: "Frameworks & Libraries",
+    skills: [
+      { name: "React.js", level: 90, icon: <React className="w-5 h-5" /> },
+      { name: "Node.js", level: 75, icon: <NodeJs className="w-5 h-5" /> },
+      { name: "Tailwind CSS", level: 85, icon: <TailwindCss className="w-5 h-5" /> },
+      { name: "Bootstrap", level: 80, icon: <Bootstrap className="w-5 h-5" /> },
+      { name: "Flutter", level: 75, icon: <CrossPlatform className="w-5 h-5" /> },
+    ],
+  },
+  {
+    name: "Tools & Technologies",
+    skills: [
+      { name: "Git & GitHub", level: 85, icon: <Github className="w-5 h-5" /> },
+      { name: "VS Code", level: 90, icon: <VsCode className="w-5 h-5" /> },
+      { name: "NPM", level: 85, icon: <Npm className="w-5 h-5" /> },
+      { name: "API Integration", level: 85, icon: <Api className="w-5 h-5" /> },
+      { name: "Figma", level: 75, icon: <Figma className="w-5 h-5" /> },
+    ],
+  },
+  {
+    name: "Other Skills",
+    skills: [
+      { name: "Web Scraping", level: 75, icon: <Web className="w-5 h-5" /> },
+      { name: "AI/LLM Basics", level: 70, icon: <Ai className="w-5 h-5" /> },
+      { name: "Cross-platform Development", level: 80, icon: <CrossPlatform className="w-5 h-5" /> },
+      { name: "Local Storage", level: 85, icon: <LocalStorage className="w-5 h-5" /> },
+      { name: "Version Control", level: 85, icon: <GitBranch className="w-5 h-5" /> },
+    ],
+  },
 ];
 
 const Skills = () => {
@@ -26,31 +89,63 @@ const Skills = () => {
         >
           Skills & Technologies
         </motion.h2>
-        <div className="max-w-2xl mx-auto space-y-6">
-          {skillsList.map((skill, index) => (
-            <div key={skill.name} className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-gray-700 dark:text-gray-300">{skill.name}</span>
-                <span className="text-gray-700 dark:text-gray-300">{skill.level}%</span>
-              </div>
-              <motion.div
-                className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
-                initial={{ opacity: 0, scaleX: 0 }}
-                whileInView={{ opacity: 1, scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+        
+        <Tabs defaultValue={skillCategories[0].name} className="max-w-4xl mx-auto">
+          <TabsList className="flex flex-wrap justify-center mb-8">
+            {skillCategories.map((category) => (
+              <TabsTrigger
+                key={category.name}
+                value={category.name}
+                className="px-4 py-2 m-1"
               >
-                <motion.div
-                  className="h-full bg-purple-500 rounded-full"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 1, ease: "easeOut" }}
-                />
-              </motion.div>
-            </div>
+                {category.name}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {skillCategories.map((category) => (
+            <TabsContent
+              key={category.name}
+              value={category.name}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {category.skills.map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      {skill.icon}
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        {skill.name}
+                      </h3>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-300">Proficiency</span>
+                        <span className="text-gray-600 dark:text-gray-300">{skill.level}%</span>
+                      </div>
+                      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-purple-500 rounded-full"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, ease: "easeOut" }}
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
       </div>
     </section>
   );
