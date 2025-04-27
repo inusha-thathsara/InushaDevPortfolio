@@ -15,7 +15,7 @@ export const projects: Project[] = [
     technologies: ["React", "TailwindCSS", "Framer Motion"],
     githubUrl: "https://github.com/inusha-thathsara/CloudFlow-SaaS-LandingPage",
     liveUrl: "https://8bmkeya5p1cr.trickle.host",
-    imageUrl: "https://source.unsplash.com/featured/600x400?saas",
+    imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&h=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     featured: true
   },
   {
