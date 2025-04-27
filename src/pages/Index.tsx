@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Skills from "../components/Skills";
@@ -29,7 +28,7 @@ const Index = () => {
                 transition={{ delay: 0.2 }}
                 className="text-5xl font-bold mb-6"
               >
-                Hi, I'm <span className="text-purple-500">Your Name</span>
+                Hi, I'm <span className="text-purple-500">Inusha Gunasekara</span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -37,7 +36,7 @@ const Index = () => {
                 transition={{ delay: 0.3 }}
                 className="text-xl text-gray-600 dark:text-gray-300 mb-8"
               >
-                A Full Stack Developer passionate about creating innovative web solutions
+                Hi, I'm Inusha Gunasekara, a passionate frontend developer. I love turning ideas into interactive, user-friendly web experiences using React, JavaScript, and modern web technologies. I'm also exploring the world of AI development and enjoy solving real-world problems through code. Let's build something awesome together!
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
