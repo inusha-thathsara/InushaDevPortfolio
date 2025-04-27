@@ -1,4 +1,3 @@
-
 export interface Project {
   title: string;
   description: string;
@@ -11,12 +10,12 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Project 1",
-    description: "A full-stack web application built with React and Node.js",
-    technologies: ["React", "Node.js", "MongoDB"],
-    githubUrl: "https://github.com/yourusername/project1",
-    liveUrl: "https://project1.com",
-    imageUrl: "https://source.unsplash.com/featured/600x400?coding",
+    title: "SaaS Landing Page",
+    description: "A responsive, modern landing page for a SaaS product built with React and TailwindCSS. Features a clean design, dark/light theme support, and smooth animations.",
+    technologies: ["React", "TailwindCSS", "Framer Motion"],
+    githubUrl: "https://github.com/inusha-thathsara/CloudFlow-SaaS-LandingPage",
+    liveUrl: "https://8bmkeya5p1cr.trickle.host",
+    imageUrl: "https://source.unsplash.com/featured/600x400?saas",
     featured: true
   },
   {
@@ -51,4 +50,3 @@ export const projects: Project[] = [
     imageUrl: "https://source.unsplash.com/featured/600x400?weather",
   }
 ];
-
