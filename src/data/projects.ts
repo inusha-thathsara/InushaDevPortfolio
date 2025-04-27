@@ -19,12 +19,11 @@ export const projects: Project[] = [
     featured: true
   },
   {
-    title: "Project 2",
-    description: "An e-commerce platform with real-time updates",
-    technologies: ["React", "Firebase", "Stripe"],
-    githubUrl: "https://github.com/yourusername/project2",
-    liveUrl: "https://project2.com",
-    imageUrl: "https://source.unsplash.com/featured/600x400?website",
+    title: "CinemaSync",
+    description: "A movie search application that allows users to search, filter, and explore detailed information about movies. Features include real-time search, advanced filtering options, and comprehensive movie details display.",
+    technologies: ["React", "Python", "TMDB API", "Tailwind CSS"],
+    liveUrl: "https://gunasekara.databutton.app/cinema-sync",
+    imageUrl: "https://images.unsplash.com/photo-1500673922987-e212871fec22?q=80&w=600&h=400&auto=format&fit=crop",
     featured: true
   },
   {
