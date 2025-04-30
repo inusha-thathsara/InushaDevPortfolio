@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ThemeProvider } from "../components/ThemeProvider";
@@ -53,19 +54,19 @@ const TicTacToe = () => {
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
 
-    const { winner, gameState } = checkWinner(newBoard);
+    const result = checkWinner(newBoard);
     
-    if (gameState !== "Playing") {
-      setGameState(gameState);
-      setWinner(winner);
-      updateScores(gameState, winner);
+    if (result.gameState !== "Playing") {
+      setGameState(result.gameState);
+      setWinner(result.winner);
+      updateScores(result.gameState, result.winner);
       
-      if (gameState === "Won") {
+      if (result.gameState === "Won") {
         toast({
-          title: `${winner} Wins!`,
-          description: `Player ${winner} has won the game!`,
+          title: `${result.winner} Wins!`,
+          description: `Player ${result.winner} has won the game!`,
         });
-      } else if (gameState === "Draw") {
+      } else if (result.gameState === "Draw") {
         toast({
           title: "It's a Draw!",
           description: "The game ended in a draw.",
