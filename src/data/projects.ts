@@ -45,6 +45,14 @@ export const projects: Project[] = [
     featured: true
   },
   {
+    title: "Workout Log Synergy",
+    description: "A comprehensive workout tracking application that allows users to log exercises, track progress, and visualize fitness improvements over time. Features a user-friendly interface and responsive design.",
+    technologies: ["React", "TypeScript", "Firebase", "Tailwind CSS"],
+    githubUrl: "https://github.com/inusha-thathsara/workout-log-synergy",
+    liveUrl: "https://inusha-thathsara.github.io/workout-log-synergy/",
+    imageUrl: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=600&h=400&auto=format&fit=crop",
+  },
+  {
     title: "Project 5",
     description: "Weather forecast application",
     technologies: ["React", "OpenWeather API", "Tailwind"],
