@@ -29,8 +29,8 @@ export const projects: Project[] = [
     title: "TicTacToe Game",
     description: "An interactive TicTacToe game with two play modes: Player vs Player and Player vs AI. The AI mode offers four difficulty levels: Easy, Normal, Hard, and Impossible. Features a clean, responsive design with animations and sound effects.",
     technologies: ["React", "Typescript", "Framer Motion", "Tailwind CSS"],
-    githubUrl: "https://github.com/inusha-thathsara/tictactoe-game",
-    liveUrl: "https://tictactoe.inusha.dev",
+    githubUrl: "https://github.com/inusha-thathsara/tictactoe",
+    liveUrl: "https://inusha-thathsara.github.io/tictactoe/",
     imageUrl: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?q=80&w=600&h=400&auto=format&fit=crop",
     featured: true
   },
