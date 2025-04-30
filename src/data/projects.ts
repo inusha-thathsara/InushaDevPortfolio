@@ -26,11 +26,12 @@ export const projects: Project[] = [
     featured: true
   },
   {
-    title: "Project 3",
-    description: "A mobile-first progressive web application",
-    technologies: ["React Native", "GraphQL", "AWS"],
-    githubUrl: "https://github.com/yourusername/project3",
-    imageUrl: "https://source.unsplash.com/featured/600x400?computer",
+    title: "TicTacToe Game",
+    description: "An interactive TicTacToe game with two play modes: Player vs Player and Player vs AI. The AI mode offers four difficulty levels: Easy, Normal, Hard, and Impossible. Features a clean, responsive design with animations and sound effects.",
+    technologies: ["React", "Typescript", "Framer Motion", "Tailwind CSS"],
+    githubUrl: "https://github.com/inusha-thathsara/tictactoe-game",
+    liveUrl: "https://tictactoe.inusha.dev",
+    imageUrl: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?q=80&w=600&h=400&auto=format&fit=crop",
     featured: true
   },
   {

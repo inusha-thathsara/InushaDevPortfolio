@@ -9,6 +9,7 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Skills from "./pages/Skills";
+import TicTacToe from "./pages/TicTacToe";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/tictactoe" element={<TicTacToe />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

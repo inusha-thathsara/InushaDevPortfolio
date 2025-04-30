@@ -1,17 +1,9 @@
 
 import { motion } from "framer-motion";
 import { Github, Link } from "lucide-react";
+import { Project } from "../data/projects";
 
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  technologies: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  imageUrl: string;
-}
-
-const ProjectCard = ({ title, description, technologies, githubUrl, liveUrl, imageUrl }: ProjectCardProps) => {
+const ProjectCard = ({ title, description, technologies, githubUrl, liveUrl, imageUrl }: Project) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
