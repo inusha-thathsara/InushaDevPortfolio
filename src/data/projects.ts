@@ -11,11 +11,12 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Project 4",
-    description: "A real-time chat application",
-    technologies: ["Socket.io", "Express", "MongoDB"],
-    githubUrl: "https://github.com/yourusername/project4",
-    imageUrl: "https://source.unsplash.com/featured/600x400?chat",
+    title: "Timer and Stopwatch",
+    description: "A clean and intuitive timer and stopwatch application with multiple features. Users can set custom times, track elapsed time, and use pause/resume functionality with a minimal, responsive interface.",
+    technologies: ["React", "TypeScript", "Tailwind CSS"],
+    githubUrl: "https://github.com/inusha-thathsara/timer-and-stopwatch",
+    liveUrl: "https://inusha-thathsara.github.io/timer-and-stopwatch/",
+    imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=600&h=400&auto=format&fit=crop",
   },
   {
     title: "CinemaSync",
