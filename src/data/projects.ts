@@ -17,6 +17,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/inusha-thathsara/timer-and-stopwatch",
     liveUrl: "https://inusha-thathsara.github.io/timer-and-stopwatch/",
     imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
   },
   {
     title: "CinemaSync",
@@ -51,6 +52,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/inusha-thathsara/workout-log-synergy",
     liveUrl: "https://inusha-thathsara.github.io/workout-log-synergy/",
     imageUrl: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
   },
   {
     title: "Project 5",
