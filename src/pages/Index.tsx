@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Skills from "../components/Skills";
@@ -8,14 +7,10 @@ import ProjectCard from "../components/ProjectCard";
 import { projects } from "../data/projects";
 
 const Index = () => {
-  // Manually select specific projects for the homepage by using specific indices
-  // This ensures we always get exactly the first 3 projects regardless of reload
-  const homepageProjects = [
-    projects[0], // Timer and Stopwatch
-    projects[1], // CinemaSync
-    projects[2], // TicTacToe Game
-  ];
-
+  // Select three specific projects to feature on the homepage
+  // Using projects with featured: true property from the data
+  const featuredProjects = projects.filter(project => project.featured === true).slice(0, 3);
+  
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -70,7 +65,7 @@ const Index = () => {
               Featured Projects
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {homepageProjects.map((project) => (
+              {featuredProjects.map((project) => (
                 <ProjectCard key={project.title} {...project} />
               ))}
             </div>
