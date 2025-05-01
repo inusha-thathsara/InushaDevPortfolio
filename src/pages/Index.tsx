@@ -8,7 +8,12 @@ import ProjectCard from "../components/ProjectCard";
 import { projects } from "../data/projects";
 
 const Index = () => {
-  const featuredProjects = projects.filter(project => project.featured).slice(0, 3);
+  // Manually select specific projects for the homepage
+  const homepageProjects = [
+    projects[0], // Timer and Stopwatch
+    projects[1], // CinemaSync
+    projects[2], // TicTacToe Game
+  ];
 
   return (
     <ThemeProvider>
@@ -64,7 +69,7 @@ const Index = () => {
               Featured Projects
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProjects.map((project) => (
+              {homepageProjects.map((project) => (
                 <ProjectCard key={project.title} {...project} />
               ))}
             </div>
