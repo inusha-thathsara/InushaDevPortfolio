@@ -6,6 +6,9 @@ import { ThemeProvider } from "../components/ThemeProvider";
 import { projects } from "../data/projects";
 
 const Projects = () => {
+  // Import all projects directly without any filtering
+  const allProjects = [...projects];
+  
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -20,7 +23,7 @@ const Projects = () => {
               All Projects
             </motion.h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
+              {allProjects.map((project) => (
                 <ProjectCard key={project.title} {...project} />
               ))}
             </div>

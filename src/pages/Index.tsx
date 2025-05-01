@@ -8,7 +8,8 @@ import ProjectCard from "../components/ProjectCard";
 import { projects } from "../data/projects";
 
 const Index = () => {
-  // Manually select specific projects for the homepage
+  // Manually select specific projects for the homepage by using specific indices
+  // This ensures we always get exactly the first 3 projects regardless of reload
   const homepageProjects = [
     projects[0], // Timer and Stopwatch
     projects[1], // CinemaSync
