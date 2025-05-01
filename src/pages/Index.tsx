@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Skills from "../components/Skills";
@@ -7,7 +8,7 @@ import ProjectCard from "../components/ProjectCard";
 import { projects } from "../data/projects";
 
 const Index = () => {
-  const featuredProjects = projects.filter(project => project.featured);
+  const featuredProjects = projects.filter(project => project.featured).slice(0, 3);
 
   return (
     <ThemeProvider>
@@ -66,6 +67,16 @@ const Index = () => {
               {featuredProjects.map((project) => (
                 <ProjectCard key={project.title} {...project} />
               ))}
+            </div>
+            <div className="text-center mt-10">
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="/projects"
+                className="inline-block bg-purple-500 text-white px-8 py-3 rounded-full font-medium hover:bg-purple-600 transition-colors"
+              >
+                View All Projects
+              </motion.a>
             </div>
           </div>
         </section>
