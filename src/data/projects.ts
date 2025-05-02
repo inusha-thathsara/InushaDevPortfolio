@@ -55,11 +55,12 @@ export const projects: Project[] = [
     featured: false
   },
   {
-    title: "Project 5",
-    description: "Weather forecast application",
-    technologies: ["React", "OpenWeather API", "Tailwind"],
-    githubUrl: "https://github.com/yourusername/project5",
-    imageUrl: "https://source.unsplash.com/featured/600x400?weather",
-    featured: false
+    title: "Pixel Art Creator",
+    description: "A web-based pixel art creation tool that allows users to create, edit, and download pixel art. Features include color picker, custom canvas size, and various drawing tools.",
+    technologies: ["React", "JavaScript", "HTML Canvas", "CSS"],
+    githubUrl: "https://github.com/inusha-thathsara/pixel-art-creator",
+    liveUrl: "https://8iizfevcl0yj.trickle.host",
+    imageUrl: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
   }
 ];
