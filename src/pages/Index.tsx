@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Skills from "../components/Skills";
@@ -5,6 +6,7 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { ThemeProvider } from "../components/ThemeProvider";
 import ProjectCard from "../components/ProjectCard";
 import { projects } from "../data/projects";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   // Select three specific projects to feature on the homepage
@@ -99,14 +101,17 @@ const Index = () => {
                 I'm currently available for freelance work and full-time positions.
                 If you have a project that you want to get started or think you need my help with something, get in touch.
               </p>
-              <motion.a
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="mailto:inusha.thathsara@gmail.com"
-                className="inline-block bg-purple-500 text-white px-8 py-3 rounded-full font-medium hover:bg-purple-600 transition-colors"
               >
-                Send Message
-              </motion.a>
+                <Link
+                  to="/contact"
+                  className="inline-block bg-purple-500 text-white px-8 py-3 rounded-full font-medium hover:bg-purple-600 transition-colors"
+                >
+                  Send Message
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </section>
