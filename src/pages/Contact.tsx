@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "../components/Navbar";
 import { ThemeProvider } from "../components/ThemeProvider";
+import { useState } from "react";
+import emailjs from 'emailjs-com';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,6 +22,7 @@ const formSchema = z.object({
 
 const Contact = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,21 +33,48 @@ const Contact = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
     try {
-      // Here you would integrate with your preferred email service
-      // For now, we'll just show a success message
       console.log("Form submitted:", values);
-      toast({
-        title: "Message sent!",
-        description: "Thanks for reaching out. I'll get back to you within 24 hours!",
-      });
-      form.reset();
+      
+      // Initialize EmailJS with your user ID
+      // Replace 'YOUR_USER_ID' with your actual EmailJS user ID
+      emailjs.init("YOUR_USER_ID");
+      
+      const templateParams = {
+        from_name: values.name,
+        from_email: values.email,
+        message: values.message,
+        to_name: "Inusha Gunasekara",
+        reply_to: values.email,
+      };
+
+      // Send the email
+      // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual values
+      const response = await emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        templateParams
+      );
+      
+      if (response.status === 200) {
+        toast({
+          title: "Message sent!",
+          description: "Thanks for reaching out. I'll get back to you within 24 hours!",
+        });
+        form.reset();
+      } else {
+        throw new Error("Failed to send email");
+      }
     } catch (error) {
+      console.error("Error sending email:", error);
       toast({
         title: "Error",
-        description: "There was an error sending your message. Please try again.",
+        description: "There was an error sending your message. Please try again or contact directly via email.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -181,8 +211,8 @@ const Contact = () => {
                         </FormItem>
                       )}
                     />
-                    <Button type="submit" className="w-full">
-                      Send Message
+                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                      {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                   </form>
                 </Form>
