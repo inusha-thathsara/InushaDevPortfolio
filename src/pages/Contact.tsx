@@ -129,12 +129,13 @@ const Contact = () => {
 
                 <div>
                   <h2 className="text-2xl font-semibold mb-4">Social Platforms</h2>
-                  <div className="flex gap-4">
+                  <div className="flex flex-wrap gap-4">
                     <a
                       href="https://www.linkedin.com/in/inusha-gunasekara-9996632a5"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="LinkedIn Profile"
                     >
                       <Linkedin className="h-6 w-6" />
                     </a>
@@ -143,8 +144,36 @@ const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="GitHub Profile"
                     >
                       <Github className="h-6 w-6" />
+                    </a>
+                    <a
+                      href="https://www.freelancer.com/u/InushaThathsara?frm=InushaThathsara&sb=t"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="Freelancer Profile"
+                    >
+                      <span className="font-semibold text-lg">FL</span>
+                    </a>
+                    <a
+                      href="https://www.fiverr.com/s/Eg9y8Gd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="Fiverr Profile"
+                    >
+                      <span className="font-semibold text-lg">Fi</span>
+                    </a>
+                    <a
+                      href="https://www.upwork.com/freelancers/~01fa4853c31d224ce6?mp_source=share"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="Upwork Profile"
+                    >
+                      <span className="font-semibold text-lg">Up</span>
                     </a>
                   </div>
                 </div>
