@@ -1,4 +1,3 @@
-
 export interface Project {
   title: string;
   description: string;
@@ -7,6 +6,7 @@ export interface Project {
   liveUrl?: string;
   imageUrl: string;
   featured?: boolean;
+  internalRoute?: string; // New property for internal navigation
 }
 
 export const projects: Project[] = [
@@ -34,6 +34,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/inusha-thathsara/tictactoe",
     liveUrl: "https://inusha-thathsara.github.io/tictactoe/",
     imageUrl: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?q=80&w=600&h=400&auto=format&fit=crop",
+    internalRoute: "/tictactoe", // Added internal route
     featured: true
   },
   {
