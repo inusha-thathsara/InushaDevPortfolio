@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -148,38 +147,37 @@ const Contact = () => {
                     >
                       <Github className="h-6 w-6" />
                     </a>
-                    <a
-                      href="https://www.freelancer.com/u/InushaThathsara?frm=InushaThathsara&sb=t"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                      aria-label="Freelancer Profile"
-                    >
-                      <span className="font-semibold text-lg">FL</span>
-                    </a>
-                    <a
-                      href="https://www.fiverr.com/s/Eg9y8Gd"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                      aria-label="Fiverr Profile"
-                    >
-                      <span className="font-semibold text-lg">Fi</span>
-                    </a>
-                    <a
-                      href="https://www.upwork.com/freelancers/~01fa4853c31d224ce6?mp_source=share"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                      aria-label="Upwork Profile"
-                    >
-                      <span className="font-semibold text-lg">Up</span>
-                    </a>
                   </div>
                 </div>
 
                 <div>
                   <h2 className="text-2xl font-semibold mb-4">Availability</h2>
+                  <div className="space-y-3 mb-4">
+                    <a
+                      href="https://www.freelancer.com/u/InushaThathsara?frm=InushaThathsara&sb=t"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-500 hover:text-blue-700 transition-colors"
+                    >
+                      <span className="font-medium">Freelancer</span>
+                    </a>
+                    <a
+                      href="https://www.fiverr.com/s/Eg9y8Gd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-green-500 hover:text-green-700 transition-colors"
+                    >
+                      <span className="font-medium">Fiverr</span>
+                    </a>
+                    <a
+                      href="https://www.upwork.com/freelancers/~01fa4853c31d224ce6?mp_source=share"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-teal-500 hover:text-teal-700 transition-colors"
+                    >
+                      <span className="font-medium">Upwork</span>
+                    </a>
+                  </div>
                   <p className="text-green-500 font-medium">
                     ✓ Open for freelance work
                   </p>
