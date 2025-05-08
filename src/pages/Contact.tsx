@@ -37,8 +37,7 @@ const Contact = () => {
       console.log("Form submitted:", values);
       
       // Initialize EmailJS with your user ID
-      // Replace 'YOUR_USER_ID' with your actual EmailJS user ID
-      emailjs.init("YOUR_USER_ID");
+      emailjs.init("Al0GUwE8amaPsGuQD");
       
       const templateParams = {
         from_name: values.name,
@@ -49,10 +48,9 @@ const Contact = () => {
       };
 
       // Send the email
-      // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual values
       const response = await emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        "service_7vd4zn9",
+        "template_lov8s4n",
         templateParams
       );
       
