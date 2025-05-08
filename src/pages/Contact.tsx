@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -125,30 +126,6 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-4">Social Platforms</h2>
-                  <div className="flex flex-wrap gap-4">
-                    <a
-                      href="https://www.linkedin.com/in/inusha-gunasekara-9996632a5"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                      aria-label="LinkedIn Profile"
-                    >
-                      <Linkedin className="h-6 w-6" />
-                    </a>
-                    <a
-                      href="https://github.com/inusha-thathsara"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                      aria-label="GitHub Profile"
-                    >
-                      <Github className="h-6 w-6" />
-                    </a>
-                  </div>
-                </div>
-
-                <div>
                   <h2 className="text-2xl font-semibold mb-4">Availability</h2>
                   <div className="space-y-3 mb-4">
                     <a
@@ -179,9 +156,37 @@ const Contact = () => {
                   <p className="text-green-500 font-medium">
                     ✓ Open for freelance work
                   </p>
-                  <Button variant="outline" className="mt-4" onClick={() => window.open('/resume.pdf', '_blank')}>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4" 
+                    onClick={() => window.open('https://drive.google.com/file/d/15IGpwBbsrbRFlk14H1E3fMvas0g0hpS0/view?usp=drive_link', '_blank')}
+                  >
                     <Download className="mr-2 h-4 w-4" /> Download Resume
                   </Button>
+                </div>
+
+                <div>
+                  <h2 className="text-2xl font-semibold mb-4">Social Platforms</h2>
+                  <div className="flex flex-wrap gap-4">
+                    <a
+                      href="https://www.linkedin.com/in/inusha-gunasekara-9996632a5"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="LinkedIn Profile"
+                    >
+                      <Linkedin className="h-6 w-6" />
+                    </a>
+                    <a
+                      href="https://github.com/inusha-thathsara"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="GitHub Profile"
+                    >
+                      <Github className="h-6 w-6" />
+                    </a>
+                  </div>
                 </div>
               </motion.div>
 
