@@ -1,10 +1,9 @@
 
 import { motion } from "framer-motion";
-import { Github, Link, PlayCircle } from "lucide-react";
+import { Github, Link } from "lucide-react";
 import { Project } from "../data/projects";
-import { Link as RouterLink } from "react-router-dom";
 
-const ProjectCard = ({ title, description, technologies, githubUrl, liveUrl, imageUrl, internalRoute }: Project) => {
+const ProjectCard = ({ title, description, technologies, githubUrl, liveUrl, imageUrl }: Project) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -51,17 +50,6 @@ const ProjectCard = ({ title, description, technologies, githubUrl, liveUrl, ima
             >
               <Link size={20} />
             </motion.a>
-          )}
-          {internalRoute && (
-            <motion.div whileHover={{ scale: 1.1 }}>
-              <RouterLink 
-                to={internalRoute} 
-                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                title="Play Now"
-              >
-                <PlayCircle size={20} />
-              </RouterLink>
-            </motion.div>
           )}
         </div>
       </div>
