@@ -20,6 +20,15 @@ export const projects: Project[] = [
     featured: true
   },
   {
+    title: "Smart Multi-Unit Converter",
+    description: "A comprehensive unit conversion tool that handles length, weight, temperature, volume, and time. Features a clean interface with instant conversions and support for a wide range of measurement units.",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    githubUrl: "https://github.com/inusha-thathsara/smart-unit-converter",
+    liveUrl: "https://inusha-thathsara.github.io/smart-unit-converter/",
+    imageUrl: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
+  },
+  {
     title: "CinemaSync",
     description: "A movie search application that allows users to search, filter, and explore detailed information about movies. Features include real-time search, advanced filtering options, and comprehensive movie details display.",
     technologies: ["React", "Python", "TMDB API", "Tailwind CSS"],
