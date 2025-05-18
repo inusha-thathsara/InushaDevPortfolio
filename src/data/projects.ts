@@ -29,6 +29,15 @@ export const projects: Project[] = [
     featured: true
   },
   {
+    title: "Visual Unit Converter",
+    description: "An interactive unit conversion tool with visual representations to help users understand the scale of different units. Supports various unit categories with intuitive, animated visualizations.",
+    technologies: ["HTML", "CSS", "JavaScript", "SVG"],
+    githubUrl: "https://github.com/inusha-thathsara/visual-unit-converter",
+    liveUrl: "https://inusha-thathsara.github.io/visual-unit-converter/",
+    imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
+  },
+  {
     title: "CinemaSync",
     description: "A movie search application that allows users to search, filter, and explore detailed information about movies. Features include real-time search, advanced filtering options, and comprehensive movie details display.",
     technologies: ["React", "Python", "TMDB API", "Tailwind CSS"],
