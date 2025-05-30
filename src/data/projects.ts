@@ -1,4 +1,3 @@
-
 export interface Project {
   title: string;
   description: string;
@@ -35,6 +34,15 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/inusha-thathsara/visual-unit-converter",
     liveUrl: "https://inusha-thathsara.github.io/visual-unit-converter/",
     imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
+  },
+  {
+    title: "Developer Portfolio",
+    description: "A modern, responsive portfolio website showcasing my projects, skills, and experience as a frontend developer. Built with React, TypeScript, and Tailwind CSS, featuring dark/light theme support and smooth animations.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    githubUrl: "https://github.com/inusha-thathsara/inushadevportfolio",
+    liveUrl: "https://inushadevportfolio.lovable.app",
+    imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&h=400&auto=format&fit=crop",
     featured: true
   },
   {
