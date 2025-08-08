@@ -46,6 +46,15 @@ export const projects: Project[] = [
     featured: true
   },
   {
+    title: "XCOM2 LW Planner",
+    description: "A strategic planning tool for XCOM2 Long War mod players. Features comprehensive soldier builds, equipment planning, and tactical loadout management to help optimize squad composition and mission preparation.",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    githubUrl: "https://github.com/inusha-thathsara/XCOM2_LW_Planner",
+    liveUrl: "https://inusha-thathsara.github.io/XCOM2_LW_Planner/",
+    imageUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&h=400&auto=format&fit=crop",
+    featured: true
+  },
+  {
     title: "CinemaSync",
     description: "A movie search application that allows users to search, filter, and explore detailed information about movies. Features include real-time search, advanced filtering options, and comprehensive movie details display.",
     technologies: ["React", "Python", "TMDB API", "Tailwind CSS"],
