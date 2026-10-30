@@ -91,12 +91,12 @@ const SPEED_DIAL_ITEMS: BookmarkItem[] = [
   },
   {
     id: "youtube",
-    title: "YouTube",
-    url: "https://www.youtube.com",
+    title: "CyberTube (YouTube)",
+    url: "cyber://youtube",
     icon: "▶️",
     category: "web",
-    description: "Watch video tutorials, music, podcasts, and developer talks",
-    badge: "STREAMING",
+    description: "Stream developer talks, cyberpunk ambient, and tech tutorials",
+    badge: "MEDIA HUB",
   },
   {
     id: "wikipedia",
@@ -429,6 +429,155 @@ function CyberSearchResultsView({
   );
 }
 
+// --- Subcomponent: Dedicated CyberTube Hub & Embedded Video Player ---
+function CyberTubePortalView({
+  onNavigate,
+}: {
+  onNavigate: (url: string) => void;
+}) {
+  const [activeVideoId, setActiveVideoId] = useState("4xDzrJKXOOY");
+  const [customInput, setCustomInput] = useState("");
+
+  const videos = [
+    {
+      id: "4xDzrJKXOOY",
+      title: "Cyberpunk Synthwave & Lofi Beats",
+      channel: "Lofi Girl / Synthwave",
+      tag: "AMBIENT",
+      desc: "Coding & hacking soundtrack in high definition",
+    },
+    {
+      id: "T83USwG68n8",
+      title: "Next.js Architecture Keynote",
+      channel: "Vercel",
+      tag: "FULLSTACK",
+      desc: "App Router, Turbopack, and Server Actions deep dive",
+    },
+    {
+      id: "kCc8FmEb1nY",
+      title: "Building Autonomous AI Coding Agents",
+      channel: "AI Engineering",
+      tag: "AI AGENTS",
+      desc: "Multi-agent coordination, tools, and sandbox execution",
+    },
+    {
+      id: "m0L-8s47sV4",
+      title: "Cyber Security & Red Team Fundamentals",
+      channel: "NetworkChuck",
+      tag: "SECURITY",
+      desc: "Packet inspection, web vulnerabilities, and defensive ops",
+    },
+  ];
+
+  const handleCustomSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = customInput.trim();
+    if (!trimmed) return;
+    const match = trimmed.match(/(?:watch\?v=|youtu\.be\/|embed\/|shorts\/)([a-zA-Z0-9_-]{11})/);
+    if (match && match[1]) {
+      setActiveVideoId(match[1]);
+      setCustomInput("");
+    } else {
+      onNavigate(`https://html.duckduckgo.com/html/?q=${encodeURIComponent(trimmed + " site:youtube.com")}`);
+    }
+  };
+
+  return (
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#060913] text-gray-200 flex flex-col gap-5">
+      {/* Top Banner */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)]">
+            <Video size={20} />
+          </div>
+          <div>
+            <h2 className="text-white font-mono font-bold text-base flex items-center gap-2">
+              <span>CYBERTUBE MEDIA HUB</span>
+              <span className="text-[10px] px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">
+                OFFICIAL EMBED
+              </span>
+            </h2>
+            <p className="text-xs text-gray-400 font-mono">
+              Embedded YouTube player with zero CORS restrictions & hardware accelerated streaming
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => window.open("https://www.youtube.com", "_blank", "noopener,noreferrer")}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-mono text-white transition-all cursor-pointer shrink-0"
+        >
+          <span>Open Full YouTube Tab</span>
+          <ExternalLink size={12} />
+        </button>
+      </div>
+
+      {/* Main Video Player */}
+      <div className="w-full aspect-video max-h-[500px] rounded-2xl overflow-hidden bg-black border border-white/15 shadow-[0_15px_40px_rgba(0,0,0,0.8)] relative">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=0&enablejsapi=1`}
+          title="CyberTube Player"
+          className="w-full h-full border-none"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
+
+      {/* Quick Search / Paste URL */}
+      <form onSubmit={handleCustomSubmit} className="flex gap-2">
+        <input
+          type="text"
+          value={customInput}
+          onChange={(e) => setCustomInput(e.target.value)}
+          placeholder="Paste any YouTube video link or search term..."
+          className="flex-1 bg-[#0b1020] border border-white/15 focus:border-[#00f5d4] rounded-xl px-4 py-2.5 text-xs font-mono text-white placeholder:text-gray-500 outline-none"
+        />
+        <button
+          type="submit"
+          className="bg-[#00f5d4] hover:bg-[#00f5d4]/90 text-black font-bold font-mono text-xs px-4 py-2.5 rounded-xl cursor-pointer transition-all"
+        >
+          LOAD STREAM
+        </button>
+      </form>
+
+      {/* Curated Channels Grid */}
+      <div className="flex flex-col gap-2">
+        <div className="text-xs font-mono font-bold text-gray-400">
+          FEATURED DEV & CYBERPUNK STREAMS
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {videos.map((vid) => (
+            <div
+              key={vid.id}
+              onClick={() => setActiveVideoId(vid.id)}
+              className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between gap-2 ${
+                activeVideoId === vid.id
+                  ? "bg-red-500/10 border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.2)]"
+                  : "bg-[#0b1020]/70 hover:bg-[#0e162e] border-white/10 hover:border-white/20"
+              }`}
+            >
+              <div>
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-white/5 text-gray-300">
+                  {vid.tag}
+                </span>
+                <h4 className="text-xs font-bold text-white mt-1.5 line-clamp-1">
+                  {vid.title}
+                </h4>
+                <p className="text-[11px] text-gray-400 line-clamp-2 mt-1">
+                  {vid.desc}
+                </p>
+              </div>
+              <div className="text-[10px] font-mono text-gray-500">
+                {vid.channel}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CyberBrowser() {
   const [tabs, setTabs] = useState<BrowserTab[]>([
     {
@@ -448,7 +597,7 @@ export default function CyberBrowser() {
     "https://github.com/inusha-thathsara",
     "https://en.m.wikipedia.org/wiki/Cyberpunk",
     "https://news.ycombinator.com",
-    "https://www.youtube.com",
+    "cyber://youtube",
   ]);
 
   const activeTab = tabs.find((t) => t.id === activeTabId) || tabs[0];
@@ -467,6 +616,15 @@ export default function CyberBrowser() {
     if (!trimmed) return DEFAULT_HOME_URL;
     if (trimmed.startsWith("cyber://")) return trimmed;
     
+    // Automatically map YouTube URLs to CyberTube or official zero-error embed
+    if (trimmed.includes("youtube.com") || trimmed.includes("youtu.be")) {
+      const match = trimmed.match(/(?:watch\?v=|youtu\.be\/|embed\/|shorts\/)([a-zA-Z0-9_-]{11})/);
+      if (match && match[1]) {
+        return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1`;
+      }
+      return "cyber://youtube";
+    }
+
     // Normalize duckduckgo to html.duckduckgo.com so it never blank-screens in iframe
     if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
       if (trimmed.includes("duckduckgo.com") && trimmed.includes("?q=")) {
@@ -475,7 +633,7 @@ export default function CyberBrowser() {
       return trimmed;
     }
 
-    // If it looks like a domain name (contains . and no spaces, e.g. youtube.com, github.com)
+    // If it looks like a domain name (contains . and no spaces, e.g. github.com)
     if (trimmed.includes(".") && !trimmed.includes(" ")) {
       return `https://${trimmed}`;
     }
@@ -510,6 +668,10 @@ export default function CyberBrowser() {
         if (formatted === DEFAULT_HOME_URL) title = "CyberNet Gateway";
         else if (formatted.startsWith("cyber://search?q=")) {
           title = `Search: ${decodeURIComponent(formatted.replace("cyber://search?q=", ""))}`;
+        } else if (formatted === "cyber://youtube" || formatted.startsWith("cyber://youtube?")) {
+          title = "CyberTube Media Hub";
+        } else if (formatted.includes("youtube-nocookie.com/embed/") || formatted.includes("youtube.com/embed/")) {
+          title = "CyberTube Stream";
         } else {
           try {
             const host = new URL(formatted).hostname.replace("www.", "");
@@ -789,6 +951,11 @@ export default function CyberBrowser() {
               <span className="flex items-center gap-1 text-[10px] text-[#38bdf8] font-mono">
                 <Shield size={11} />
                 <span className="hidden sm:inline">GATEWAY</span>
+              </span>
+            ) : activeTab?.url.startsWith("cyber://youtube") || activeTab?.url.includes("youtube") ? (
+              <span className="flex items-center gap-1 text-[10px] text-red-400 font-mono">
+                <Video size={11} />
+                <span className="hidden sm:inline">CYBERTUBE</span>
               </span>
             ) : activeTab?.url.startsWith("cyber://search") ? (
               <span className="flex items-center gap-1 text-[10px] text-[#00f5d4] font-mono">
@@ -1088,6 +1255,32 @@ export default function CyberBrowser() {
                     navigateActiveTab(`cyber://search?q=${encodeURIComponent(newQuery)}`)
                   }
                 />
+              ) : tab.url === "cyber://youtube" || tab.url.startsWith("cyber://youtube?") ? (
+                /* --- NATIVE CYBERTUBE MEDIA HUB --- */
+                <CyberTubePortalView onNavigate={(url) => navigateActiveTab(url)} />
+              ) : tab.url.includes("youtube-nocookie.com/embed/") || tab.url.includes("youtube.com/embed/") ? (
+                /* --- HARDWARE ACCELERATED YOUTUBE EMBED --- */
+                <div className="flex-1 relative w-full h-full bg-black flex flex-col">
+                  <iframe
+                    src={tab.url}
+                    title={tab.title}
+                    className="w-full h-full border-none flex-1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                  <div className="bg-[#0b1020] border-t border-white/10 px-3 py-1.5 flex items-center justify-between text-[11px] font-mono text-gray-400 shrink-0">
+                    <span className="text-red-400 font-bold flex items-center gap-1.5">
+                      <Video size={12} />
+                      <span>CyberTube Embedded Stream (Zero CORS)</span>
+                    </span>
+                    <button
+                      onClick={() => window.open(tab.url.replace("embed/", "watch?v="), "_blank", "noopener,noreferrer")}
+                      className="text-[#38bdf8] hover:underline flex items-center gap-1 cursor-pointer text-[10px]"
+                    >
+                      <span>Open on YouTube ↗</span>
+                    </button>
+                  </div>
+                </div>
               ) : (
                 /* --- LIVE EMBEDDED IFRAME VIEWPORT --- */
                 <div className="flex-1 relative w-full h-full bg-white flex flex-col">
@@ -1097,7 +1290,7 @@ export default function CyberBrowser() {
                     title={tab.title}
                     onLoad={() => handleIframeLoaded(tab.id)}
                     className="w-full h-full border-none flex-1"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+                    sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
 

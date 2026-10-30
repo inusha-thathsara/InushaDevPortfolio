@@ -10,34 +10,44 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Singleton pattern to avoid re-initialization
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
+// Safe singleton pattern with optional Firebase keys
+let app: any = null;
+let db: any = null;
+
+if (typeof window !== "undefined" && firebaseConfig.apiKey) {
+    try {
+        app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+        db = getFirestore(app);
+    } catch {
+        // Suppress missing/invalid Firebase configuration in production
+    }
+}
 
 export { db, doc, setDoc, getDoc, serverTimestamp };
 
 // Helper to save gas price
 export const saveGasPrice = async (gasData: any) => {
+    if (!db) return;
     try {
         await setDoc(doc(db, "telemetry", "latest_gas"), {
             ...gasData,
             updatedAt: serverTimestamp()
         });
-        console.log("Gas price cached to Firebase.");
-    } catch (e) {
-        console.error("Firebase Cache Error:", e);
+    } catch {
+        // Silent fallback
     }
 };
 
 // Helper to get fallback gas price
 export const getCachedGasPrice = async () => {
+    if (!db) return null;
     try {
         const snap = await getDoc(doc(db, "telemetry", "latest_gas"));
         if (snap.exists()) {
             return snap.data();
         }
-    } catch (e) {
-        console.error("Firebase Read Error:", e);
+    } catch {
+        // Silent fallback
     }
     return null;
 };

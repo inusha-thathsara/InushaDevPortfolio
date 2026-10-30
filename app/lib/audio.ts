@@ -4,24 +4,47 @@
 class SoundEngine {
   private ctx: AudioContext | null = null;
   private enabled: boolean = true;
+  private unlocked: boolean = false;
 
   constructor() {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("cyberpunk_os_sound");
       this.enabled = saved !== null ? saved === "true" : true;
+
+      const unlock = () => {
+        this.unlocked = true;
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume().catch(() => {});
+        }
+        window.removeEventListener("pointerdown", unlock);
+        window.removeEventListener("keydown", unlock);
+        window.removeEventListener("touchstart", unlock);
+      };
+
+      window.addEventListener("pointerdown", unlock, { once: true, passive: true });
+      window.addEventListener("keydown", unlock, { once: true, passive: true });
+      window.addEventListener("touchstart", unlock, { once: true, passive: true });
     }
   }
 
-  private initCtx() {
-    if (!this.ctx && typeof window !== "undefined") {
+  private initCtx(): boolean {
+    if (typeof window === "undefined") return false;
+    if (!this.unlocked) return false;
+
+    if (!this.ctx) {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
       if (AudioCtx) {
-        this.ctx = new AudioCtx();
+        try {
+          this.ctx = new AudioCtx();
+        } catch {
+          return false;
+        }
       }
     }
     if (this.ctx && this.ctx.state === "suspended") {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
     }
+    return !!this.ctx;
   }
 
   public isEnabled(): boolean {

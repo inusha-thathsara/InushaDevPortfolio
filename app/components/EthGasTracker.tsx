@@ -67,7 +67,6 @@ export default function EthGasTracker() {
                 }
             } catch (err) {
                 // Failsafe 2 & 3: API/Network Error -> Try Firebase -> Then Mock
-                console.error("ETH Gas Error (Active Failsafe):", err);
                 const cachedFirebase = await getCachedGasPrice();
                 const fallbackData = cachedFirebase ? (cachedFirebase as GasData) : generateMockData();
                 setGasData(fallbackData);
