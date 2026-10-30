@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inusha Portfolio | System 1 (Digital Twin)
 
-## Getting Started
+> A high-performance, terminal-styled developer portfolio built with Next.js 16, TypeScript, and Google Cloud Run. Designed to simulate a sentient operating system.
 
-First, run the development server:
+![Terminal Interface](./app/icon.png)
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Containerization**: Docker (Multi-stage build)
+- **Infrastructure**: Google Cloud Run (Serverless)
+- **State**: React Hooks (Stateless Architecture)
+
+## ✨ Key Features
+
+### 1. **Terminal Interface**
+- **Typewriter Effect**: Custom `TypedMessage` component simulates real-time text generation.
+- **Auto-Scroll**: Smart hook ensures the view always follows the cursor.
+- **Command History**: Although currently stateless, the UI supports a history-like flow.
+- **Glitch Effects**: CRT-style scanlines and RGB shifts (enabled via `GlitchWrapper`).
+
+### 2. **Static Response Engine (Privacy First)**
+- **Zero-Dependency**: Removed external AI (Gemini) APIs for a deterministic, privacy-focused experience.
+- **Hardcoded Database**: `HARDCODED_DB` handles responses instantly (<5ms latency).
+- **Quota Protection**: No API keys exposed or required for basic chat functions.
+
+### 3. **Eth Gas Tracker (Optimized)**
+- **Real-time Data**: Fetches mainnet gas prices via Etherscan V2 API.
+- **Server-Side Proxy**: Securely routes requests through `/api/gas` to protect API keys.
+- **Smart Caching**:
+  - Browser `localStorage` cache (TTL: 5 minutes).
+  - Reduced polling interval (60 seconds).
+  - Firebase Fallback (Historical telemetry).
+
+### 4. **System Commands**
+- **Halt Sequence**: `sudo delete` -> `confirm` triggers a simulated system crash.
+- **Reboot**: `sudo reboot` restores the interface.
+
+## 🛠️ Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/inusha-thathsara/inusha-portfolio.git
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the terminal.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Deployment (Google Cloud Run)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is configured for **stateless container deployment**.
 
-## Learn More
+### Prerequisites
+- Google Cloud SDK (`gcloud`)
+- Docker (optional, for local build)
+- Active Billing Account (required for Cloud Build)
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Build & Deploy
+The following command builds the container source, pushes it to Artifact Registry, and deploys to Cloud Run.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```powershell
+# Authenticate
+gcloud auth login
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Set Project
+gcloud config set project terminal-portfolio-b4bb5
 
-## Deploy on Vercel
+# Deploy (One-Liner) with API Key injection
+gcloud run deploy inusha-portfolio \
+  --source . \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --labels "dev-tutorial=devnewyear2026" \
+  --set-env-vars="ETHERSCAN_API_KEY=YOUR_ETHERSCAN_KEY"
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Dockerfile Optimization
+- **Standalone Output**: `next.config.ts` uses `output: 'standalone'` to minimize image size (~100MB).
+- **Multi-Stage Build**: Separates dependencies (`deps`), builder (`builder`), and runner (`runner`) stages.
+- **Non-Root User**: Runs as `nextjs` user for security.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 💻 Command Reference
+
+| Command | Description |
+| :--- | :--- |
+| `help` | List all available commands. |
+| `about` / `whoami` | Identity verification and role. |
+| `skills` / `stack` | Technical expertise and toolbelt. |
+| `projects` | Index of active developments (80% Protocol, Crossword Arch, Inusha-PF). |
+| `contact` | Social links (GitHub, LinkedIn). |
+| `status` | System diagnostic report. |
+| `ping` | Network latency check (Pong!). |
+| `weather` | Local meteorology report. |
+| `sudo delete` | **[RESTRICTED]** Initiates deletion sequence. |
+
+## 📂 Project Structure
+
+```
+├── app/
+│   ├── api/            # Server-side routes (e.g., /api/gas)
+│   ├── components/     # UI Components (TypedMessage, TerminalInput)
+│   ├── context/        # React Context (SystemState)
+│   ├── lib/            # Utilities (Firebase, Helpers)
+│   ├── text/           # Static content (ASCII Art)
+│   ├── layout.tsx      # Root layout (Fonts, Meta)
+│   └── page.tsx        # Main Terminal Page
+├── public/             # Static Assets (Favicons, SVGs)
+├── .dockerignore       # Build exclusion rules
+├── Dockerfile          # Container instructions
+├── next.config.ts      # Next.js configuration
+└── tailwind.config.ts  # Style tokens
+```
+
+---
+Running on **System 1 v2.0**.
