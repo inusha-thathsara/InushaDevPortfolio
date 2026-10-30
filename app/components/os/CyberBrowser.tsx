@@ -1290,7 +1290,7 @@ export default function CyberBrowser() {
                     title={tab.title}
                     onLoad={() => handleIframeLoaded(tab.id)}
                     className="w-full h-full border-none flex-1"
-                    sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
 

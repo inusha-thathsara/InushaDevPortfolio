@@ -194,16 +194,53 @@ export async function GET(req: NextRequest) {
       // Strip known tracking scripts that trigger CORS blocks
       html = html.replace(/<script[^>]*(?:googleads|doubleclick|googletagmanager|google-analytics|adservice)[^>]*>[\s\S]*?<\/script>/gi, "");
 
-      // Inject robust client shim to prevent SecurityError and unhandled rejection noise
+      // Neutralize third-party embedded tracking/auth iframes that violate external CSP (e.g. forem auth_pass)
+      html = html.replace(/https:\/\/forem\.com\/auth_pass\/iframe/g, "about:blank");
+      html = html.replace(/data-honeybadger-key=["'][^"']*["']/g, "");
+
+      // Inject robust client shim to prevent SecurityError, Honeybadger recursive loops, and unhandled rejection noise
       const clientShim = `
         <script>
           (function() {
+            // 1. Shims history to prevent SecurityError on foreign origins
             try {
               var _push = history.pushState.bind(history);
               var _replace = history.replaceState.bind(history);
               history.pushState = function(s, t, u) { try { return _push(s, t, u); } catch(e){} };
               history.replaceState = function(s, t, u) { try { return _replace(s, t, u); } catch(e){} };
             } catch(e) {}
+
+            // 2. Suppress Honeybadger / error tracker infinite loop on third-party origins
+            try {
+              window.Honeybadger = {
+                notify: function(){},
+                configure: function(){},
+                resetContext: function(){},
+                setContext: function(){},
+                beforeNotify: function(){ return false; }
+              };
+            } catch(e) {}
+
+            // 3. Fallback mock storage if browser restricts cross-origin storage access
+            try {
+              var _ = window.localStorage;
+            } catch(e) {
+              var mem = {};
+              var mock = {
+                getItem: function(k) { return mem.hasOwnProperty(k) ? mem[k] : null; },
+                setItem: function(k, v) { mem[k] = String(v); },
+                removeItem: function(k) { delete mem[k]; },
+                clear: function() { mem = {}; },
+                key: function(i) { return Object.keys(mem)[i] || null; },
+                get length() { return Object.keys(mem).length; }
+              };
+              try {
+                Object.defineProperty(window, 'localStorage', { value: mock, configurable: true, writable: true });
+                Object.defineProperty(window, 'sessionStorage', { value: mock, configurable: true, writable: true });
+              } catch(err) {}
+            }
+
+            // 4. Suppress unhandled network rejection spam
             window.addEventListener('unhandledrejection', function(e) {
               if (e && e.reason && typeof e.reason.message === 'string' && (e.reason.message.includes('Failed to fetch') || e.reason.message.includes('NetworkError'))) {
                 e.preventDefault();
