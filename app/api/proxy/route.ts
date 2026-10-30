@@ -163,6 +163,96 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // Intercept LinkedIn requests to prevent 999 authwall blocks and provide clean identity portal
+    const isLinkedIn = parsedUrl.hostname.includes("linkedin.com");
+    if (isLinkedIn) {
+      return new NextResponse(
+        `<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>LinkedIn Signal // Inusha Gunasekara</title>
+            <style>
+              * { box-sizing: border-box; margin: 0; padding: 0; }
+              body {
+                background: #060913;
+                color: #e2e8f0;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+              }
+              .card {
+                max-width: 520px;
+                width: 100%;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(56,189,248,0.3);
+                border-radius: 16px;
+                padding: 32px;
+                text-align: center;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+              }
+              .icon {
+                width: 54px;
+                height: 54px;
+                border-radius: 14px;
+                background: rgba(56,189,248,0.15);
+                border: 1px solid rgba(56,189,248,0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #38bdf8;
+                font-size: 24px;
+                font-weight: bold;
+              }
+              h2 { font-size: 18px; color: #fff; margin-top: 4px; }
+              p { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+              .btn {
+                background: #0077b5;
+                color: #fff;
+                padding: 12px 24px;
+                border-radius: 10px;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: bold;
+                transition: transform 0.15s, background 0.15s;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 8px;
+              }
+              .btn:hover { background: #0088ce; transform: scale(1.02); }
+              .tag { font-size: 10px; color: #38bdf8; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); padding: 4px 10px; border-radius: 20px; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <div class="icon">in</div>
+              <span class="tag">PROFESSIONAL TRANSMISSION CHANNEL</span>
+              <h2>Inusha Gunasekara on LinkedIn</h2>
+              <p>LinkedIn requires direct member authentication and prohibits iframe embeds. Launch directly to view full experience, skills, and connect.</p>
+              <a class="btn" href="${targetUrl}" target="_blank" rel="noopener noreferrer">Launch LinkedIn Profile ↗</a>
+            </div>
+          </body>
+        </html>`,
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "X-CyberNet-Proxy": "1",
+          },
+        }
+      );
+    }
+
     const response = await fetch(fetchUrl, {
       headers: {
         "User-Agent":
@@ -202,7 +292,35 @@ export async function GET(req: NextRequest) {
       const clientShim = `
         <script>
           (function() {
-            // 1. Shims history to prevent SecurityError on foreign origins
+            // 1. Intercept window.fetch to route sub-requests (e.g. GitHub contributions) through proxy
+            var _origFetch = window.fetch;
+            window.fetch = function(resource, init) {
+              try {
+                var url = typeof resource === 'string' ? resource : (resource && resource.url ? resource.url : '');
+                if (url) {
+                  // Suppress known telemetry endpoints that get blocked by ad-blockers to keep console pristine
+                  if (url.includes('/_private/browser/stats') || url.includes('/ahoy/visits') || url.includes('doubleclick') || url.includes('google-analytics') || url.includes('honeybadger')) {
+                    return Promise.resolve(new Response(JSON.stringify({ ok: true }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+                  }
+                  if (url.startsWith('http://') || url.startsWith('https://')) {
+                    var parsed = new URL(url);
+                    if (parsed.origin !== window.location.origin) {
+                      var proxied = '/api/proxy?url=' + encodeURIComponent(url);
+                      if (typeof resource === 'string') {
+                        resource = proxied;
+                      } else if (resource && resource.url) {
+                        resource = new Request(proxied, init);
+                      }
+                    }
+                  }
+                }
+              } catch(e) {}
+              return _origFetch.apply(window, arguments).catch(function() {
+                return new Response("", { status: 204 });
+              });
+            };
+
+            // 2. Shims history to prevent SecurityError on foreign origins
             try {
               var _push = history.pushState.bind(history);
               var _replace = history.replaceState.bind(history);
@@ -210,7 +328,7 @@ export async function GET(req: NextRequest) {
               history.replaceState = function(s, t, u) { try { return _replace(s, t, u); } catch(e){} };
             } catch(e) {}
 
-            // 2. Suppress Honeybadger / error tracker infinite loop on third-party origins
+            // 3. Suppress Honeybadger / error tracker infinite loop on third-party origins
             try {
               window.Honeybadger = {
                 notify: function(){},
@@ -221,7 +339,7 @@ export async function GET(req: NextRequest) {
               };
             } catch(e) {}
 
-            // 3. Fallback mock storage if browser restricts cross-origin storage access
+            // 4. Fallback mock storage if browser restricts cross-origin storage access
             try {
               var _ = window.localStorage;
             } catch(e) {
@@ -240,11 +358,9 @@ export async function GET(req: NextRequest) {
               } catch(err) {}
             }
 
-            // 4. Suppress unhandled network rejection spam
+            // 5. Suppress unhandled network rejection spam
             window.addEventListener('unhandledrejection', function(e) {
-              if (e && e.reason && typeof e.reason.message === 'string' && (e.reason.message.includes('Failed to fetch') || e.reason.message.includes('NetworkError'))) {
-                e.preventDefault();
-              }
+              e.preventDefault();
             });
           })();
         </script>
