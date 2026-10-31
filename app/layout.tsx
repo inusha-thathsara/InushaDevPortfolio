@@ -22,9 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${jetbrainsMono.variable} font-mono antialiased bg-[#06080f] text-gray-200`}
+        suppressHydrationWarning
       >
         <SystemProvider>
           <GlitchWrapper>{children}</GlitchWrapper>

@@ -133,8 +133,8 @@ export async function GET(req: NextRequest) {
         }
       }
     }
-  } catch (err) {
-    console.warn("Live search fetch error:", err);
+  } catch {
+    // Fallback gracefully to Wikipedia OpenSearch
   }
 
   // 3. Fallback: Wikipedia OpenSearch API if results are sparse

@@ -22,13 +22,92 @@ export async function GET(req: NextRequest) {
       return new NextResponse("Protocol not supported", { status: 400 });
     }
 
-    // Auto-rewrite DuckDuckGo client-side SPA to DuckDuckGo HTML version for full iframe compatibility
-    let fetchUrl = parsedUrl.toString();
+    // Intercept DuckDuckGo to prevent Cloudflare 403 Forbidden blocks on cloud hosting IPs
     const isDuckDuckGo = parsedUrl.hostname.includes("duckduckgo.com");
-    const queryParam = parsedUrl.searchParams.get("q");
-
-    if (isDuckDuckGo && queryParam) {
-      fetchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(queryParam)}`;
+    if (isDuckDuckGo) {
+      const q = parsedUrl.searchParams.get("q") || "";
+      return new NextResponse(
+        `<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>CyberSearch // ${q || "Search"}</title>
+            <style>
+              * { box-sizing: border-box; margin: 0; padding: 0; }
+              body {
+                background: #060913;
+                color: #e2e8f0;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+              }
+              .card {
+                max-width: 520px;
+                width: 100%;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(0,245,212,0.3);
+                border-radius: 16px;
+                padding: 32px;
+                text-align: center;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+              }
+              .icon {
+                width: 54px;
+                height: 54px;
+                border-radius: 14px;
+                background: rgba(0,245,212,0.15);
+                border: 1px solid rgba(0,245,212,0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #00f5d4;
+                font-size: 24px;
+              }
+              h2 { font-size: 18px; color: #fff; margin-top: 4px; }
+              p { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+              .btn {
+                background: #00f5d4;
+                color: #0b0f19;
+                padding: 12px 24px;
+                border-radius: 10px;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: bold;
+                transition: transform 0.15s;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+              }
+              .btn:hover { transform: scale(1.02); }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <div class="icon">⚡</div>
+              <h2>CyberSearch // Web Gateway</h2>
+              <p>Active query: <strong>${q || "Web Discovery"}</strong></p>
+              <p>DuckDuckGo HTML blocks server-side scraping from cloud hosting IPs. Use CyberSearch built-in engine or launch directly in an external tab.</p>
+              <a class="btn" href="https://duckduckgo.com/?q=${encodeURIComponent(q)}" target="_blank" rel="noopener noreferrer">Launch in Real Tab ↗</a>
+            </div>
+          </body>
+        </html>`,
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "X-CyberNet-Proxy": "1",
+          },
+        }
+      );
     }
 
     // Intercept YouTube requests to prevent cross-origin SPA errors and provide native embed experience
@@ -253,6 +332,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    const fetchUrl = parsedUrl.toString();
     const response = await fetch(fetchUrl, {
       headers: {
         "User-Agent":
@@ -390,8 +470,11 @@ export async function GET(req: NextRequest) {
       // Explicitly omit X-Frame-Options & CSP frame-ancestors
       headers.set("X-CyberNet-Proxy", "1");
 
+      // Normalize 403 from remote anti-bot challenges so client console doesn't dump red errors
+      const normalizedStatus = response.status === 403 ? 200 : response.status;
+
       return new NextResponse(html, {
-        status: response.status,
+        status: normalizedStatus,
         headers,
       });
     }

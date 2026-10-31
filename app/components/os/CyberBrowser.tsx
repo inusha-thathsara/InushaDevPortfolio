@@ -117,12 +117,12 @@ const SPEED_DIAL_ITEMS: BookmarkItem[] = [
     badge: "LIVE FEED",
   },
   {
-    id: "duckduckgo",
-    title: "DuckDuckGo HTML",
-    url: "https://html.duckduckgo.com/html/?q=cyberpunk",
-    icon: "🦆",
+    id: "search",
+    title: "CyberSearch",
+    url: "cyber://search?q=cyberpunk",
+    icon: "⚡",
     category: "web",
-    description: "HTML privacy search engine with zero frame-blocking scripts",
+    description: "Instant cyber search engine with verified tech and encyclopedia results",
     badge: "SEARCH",
   },
   {
@@ -1005,26 +1005,15 @@ export default function CyberBrowser() {
           </button>
         </form>
 
-        {/* Proxy Mode Toggle & Native Tab Popout */}
+        {/* Proxy Mode Shield Indicator & Native Tab Popout */}
         <div className="flex items-center gap-1.5">
-          <button
-            onClick={toggleProxyMode}
-            title={
-              activeTab?.proxyMode
-                ? "Proxy Shield Active: Bypasses X-Frame-Options & CORS blocking. Click to switch to Direct."
-                : "Direct Mode Active: Loads directly from source host. Click to enable Proxy Shield."
-            }
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition-all cursor-pointer border ${
-              activeTab?.proxyMode
-                ? "bg-[#38bdf8]/15 border-[#38bdf8]/40 text-[#38bdf8]"
-                : "bg-white/5 border-white/10 text-gray-400 hover:text-white"
-            }`}
+          <div
+            title="Proxy Shield Active: Bypasses X-Frame-Options and CORS blocking"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold border bg-[#38bdf8]/15 border-[#38bdf8]/40 text-[#38bdf8]"
           >
             <Shield size={12} />
-            <span className="hidden md:inline">
-              {activeTab?.proxyMode ? "PROXY" : "DIRECT"}
-            </span>
-          </button>
+            <span className="hidden md:inline">SHIELD ACTIVE</span>
+          </div>
 
           <button
             onClick={openInNativeWindow}
@@ -1069,10 +1058,8 @@ export default function CyberBrowser() {
             ? decodeURIComponent(tab.url.replace("cyber://search?q=", ""))
             : "";
 
-          // Determine Iframe Source: if proxyMode is enabled, pass through our Next.js proxy route
-          const iframeSrc = tab.proxyMode
-            ? `/api/proxy?url=${encodeURIComponent(tab.url)}`
-            : tab.url;
+          // Always route external URLs through Next.js proxy shield to prevent X-Frame-Options blocks
+          const iframeSrc = `/api/proxy?url=${encodeURIComponent(tab.url)}`;
 
           return (
             <div
@@ -1303,14 +1290,10 @@ export default function CyberBrowser() {
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
-                      <button
-                        onClick={toggleProxyMode}
-                        className="hover:text-white transition-colors cursor-pointer text-[10px] underline"
-                      >
-                        {tab.proxyMode
-                          ? "Switch to Direct Frame"
-                          : "Switch to Proxy Shield"}
-                      </button>
+                      <span className="text-emerald-400 text-[10px] flex items-center gap-1">
+                        <Shield size={10} />
+                        <span>Shield Active</span>
+                      </span>
                       <span>|</span>
                       <button
                         onClick={openInNativeWindow}

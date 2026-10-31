@@ -10,6 +10,7 @@ interface MessageItem {
   role: "user" | "assistant" | "system";
   content: string;
   isTyped?: boolean;
+  timestamp?: string;
 }
 
 interface TerminalModuleProps {
@@ -31,6 +32,7 @@ export default function TerminalModule({
       role: "system",
       content:
         "SYSTEM 2.0 NEURAL CORE INITIALIZED [OK]\nDigital Twin of Malawige Inusha Thathsara Gunasekara online.\nType any question or command. Click quick prompts below to inspect.",
+      timestamp: "SYS.INIT",
     },
   ]);
 
@@ -259,7 +261,7 @@ export default function TerminalModule({
                   {isSystem ? "SYSTEM_KERNEL" : isAssistant ? "DIGITAL_TWIN" : "GUEST_TERMINAL"}
                 </span>
                 <span className="text-gray-600">::</span>
-                <span className="text-gray-400">{new Date().toLocaleTimeString()}</span>
+                <span className="text-gray-400" suppressHydrationWarning>{m.timestamp || "ONLINE"}</span>
               </div>
 
               {isAssistant && isLast ? (
